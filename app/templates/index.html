@@ -1,13 +1,16 @@
+{% extends "base.html" %}
 
-<html>
-    <head>
-    </head>
-    <body>
-    <hr>
-        <h1>
-            My blog:
-        </h1>
-        <hr>
-
-    </body>
-</html>
+    {% block content %}
+    <h1>Hi, {{user.username }}!</h1>
+    {% if posts %}
+    {% for post in posts %}
+    <div>
+        <p>
+            {{ post.user.username }} says: <b>{{ post.body }}</b>
+        </p>
+    </div>
+    {% endfor %}
+    {% else %}
+    <h4>Be the first to create a post</h4>
+    {% endif %}
+{% endblock %}
