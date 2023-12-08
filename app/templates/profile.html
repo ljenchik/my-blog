@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div>
+        <img src="{{ user.profile_image }}" width="128" height="128"/>
+        <h1>{{ user.username }}</h1>
+         {% if user.info %}
+        <h2>{{user.info}}</h2>
+    {% endif %}
+    </div>
+    <hr>
+    <div>
+         <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+             <p>
+                {{ form.post.label }}<br>
+                 {{ form.post(cols=50, rows=4) }}<br>
+                 {% for error in form.post.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>{{ form.submit() }}</p>
+         </form>
+    </div>
+    <hr>
+
+    {% if posts %}
+        {% for post in posts%}
+        <p>
+            <img src="{{ user.profile_image }}" width="20" height="20"/>
+        </p>
+        {% endfor%}
+    {% endif %}
+
+{% endblock %}

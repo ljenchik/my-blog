@@ -14,6 +14,8 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(String(256))
     profile_image = db.Column(String(256))
     info = db.Column(String(256))
+    posts = db.relationship('Post', backref='user', lazy=True)
+
 
     def __repr__(self):
         return f'User {self.username}, {self.email}'
@@ -32,3 +34,13 @@ class User(UserMixin, db.Model):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         self.profile_image = f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
         return self.profile_image
+
+class Post(db.Model):
+    __tablename__ = "post"
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(String(140))
+    timestamp = db.Column(db.DateTime, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f'Post {self.body}'
