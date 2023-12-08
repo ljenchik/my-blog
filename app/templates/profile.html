@@ -4,6 +4,7 @@
     <div>
         <img src="{{ user.profile_image }}" width="128" height="128"/>
         <h1>{{ user.username }}</h1>
+        <p><a href="{{ url_for('update_profile') }}">Update profile</a></p>
          {% if user.info %}
         <h2>{{user.info}}</h2>
     {% endif %}
