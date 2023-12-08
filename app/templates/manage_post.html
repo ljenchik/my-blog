@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ Title }}</h1>
+    <form action="{{url_for('update_post', id=id)}}" method="post" novalidate>
+        {{ update_post_form.hidden_tag() }}
+        <p>
+            {{ update_post_form.post.label }}<br>
+            {{ update_post_form.post(cols=50, rows=4) }}<br>
+            {% for error in update_post_form.post.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ update_post_form.submit() }}</p>
+    </form>
+    <form action="{{url_for('delete_post', id=id)}}" method="post" novalidate>
+        {{ delete_post_form.hidden_tag() }}
+        <p>{{ delete_post_form.submit() }}</p>
+    </form>
+{% endblock %}

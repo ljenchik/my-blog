@@ -29,7 +29,7 @@
         {% for post in posts%}
         <p>
             <img src="{{ user.profile_image }}" width="20" height="20"/>
-            {{post.body}}
+            <a href="{{url_for('update_post', id=post.id)}}"> {{post.body}} </a>
         </p>
         {% endfor%}
     {% endif %}

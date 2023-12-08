@@ -6,6 +6,8 @@ from app.forms.login_form import LoginForm
 from app.forms.register_form import RegisterForm
 from app.forms.update_profile_form import UpdateProfileForm
 from app.forms.post_form import PostForm
+from app.forms.update_post_form import UpdatePostForm
+from app.forms.delete_post_form import DeletePostForm
 from app.models.models import User, Post
 
 
@@ -93,3 +95,42 @@ def update_profile():
         form.profile_image.data = current_user.profile_image
     return render_template('update_profile_form.html', title='Update Profile',
                            form=form)
+
+
+@app.route('/update_post/<id>', methods=["GET", "POST"])
+@login_required
+def update_post(id):
+    post = Post.query.filter_by(id=id).first_or_404()
+    user = User.query.filter_by(id=post.user_id).first_or_404()
+
+    update_post_form = UpdatePostForm()
+    delete_post_form = DeletePostForm()
+
+    if update_post_form.validate_on_submit():
+        updated_post = Post(body=update_post_form.post.data, user_id=user.id)
+        post.body = updated_post.body
+        db.session.commit()
+        flash('Your post has been changed.')
+        return redirect(url_for('user', username=user.username))
+    elif request.method == 'GET':
+        update_post_form.post.data = post.body
+    return render_template('manage_post.html', title='Update or delete post',
+                           update_post_form=update_post_form, delete_post_form=delete_post_form, id=id)
+
+
+@app.route('/delete_post/<id>', methods=["GET", "POST"])
+@login_required
+def delete_post(id):
+    post = Post.query.filter_by(id=id).first_or_404()
+    user = User.query.filter_by(id=post.user_id).first_or_404()
+
+    update_post_form = UpdatePostForm()
+    delete_post_form = DeletePostForm()
+
+    if delete_post_form.validate_on_submit():
+        db.session.delete(post)
+        db.session.commit()
+        flash('Your post has been deleted.')
+        return redirect(url_for('user', username=user.username))
+    return render_template('manage_post.html', title='Update or delete post',
+                           update_post_form=update_post_form, delete_post_form=delete_post_form, id=id)
