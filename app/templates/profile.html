@@ -28,6 +28,7 @@
         {% for post in posts%}
         <p>
             <img src="{{ user.profile_image }}" width="20" height="20"/>
+            {{post.body}}
         </p>
         {% endfor%}
     {% endif %}

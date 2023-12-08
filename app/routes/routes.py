@@ -13,7 +13,7 @@ from app.models.models import User, Post
 @login_required
 def index():
     posts = Post.query.all()
-    return render_template("index.html", title='Home Page', posts=posts, user=current_user)
+    return render_template("index.html", title='Home Page', posts=posts)
 
 
 @app.route('/login', methods=['GET', 'POST'])

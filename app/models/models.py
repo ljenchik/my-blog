@@ -1,7 +1,7 @@
 from hashlib import md5
-from sqlalchemy import String
+from sqlalchemy import String, DateTime
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from sqlalchemy.sql import func
 from app import db, login
 from flask_login import UserMixin
 
@@ -39,7 +39,8 @@ class Post(db.Model):
     __tablename__ = "post"
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(String(140))
-    timestamp = db.Column(db.DateTime, nullable=False)
+    timestamp = db.Column(DateTime, default=func.now())
+
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):

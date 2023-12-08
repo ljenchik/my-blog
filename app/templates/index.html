@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 
     {% block content %}
-    <h1>Hi, {{user.username }}!</h1>
+    <h1>Hi, {{current_user.username }}!</h1>
     {% if posts %}
     {% for post in posts %}
     <div>
         <p>
+             <p>
+            <img src="{{ post.user.get_avatar(20) }}"/>
             {{ post.user.username }} says: <b>{{ post.body }}</b>
+        </p>
         </p>
     </div>
     {% endfor %}
