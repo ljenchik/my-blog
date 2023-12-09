@@ -1,9 +1,16 @@
-from hashlib import md5
-from sqlalchemy import String, DateTime
-from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy.sql import func
 from app import db, login
+
+from hashlib import md5
+
+from sqlalchemy import String, DateTime
+from sqlalchemy.sql import func
+
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask import redirect, url_for
+from flask_admin.contrib.sqla import ModelView
 from flask_login import UserMixin
+from flask_login import current_user
+
 
 class User(UserMixin, db.Model):
     __tablename__ = "user"
@@ -14,8 +21,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(String(256))
     profile_image = db.Column(String(256))
     info = db.Column(String(256))
-    posts = db.relationship('Post', backref='user', lazy=True)
-
+    posts = db.relationship('Post', back_populates='user', cascade="all, delete")
 
     def __repr__(self):
         return f'User {self.username}, {self.email}'
@@ -35,13 +41,27 @@ class User(UserMixin, db.Model):
         self.profile_image = f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
         return self.profile_image
 
+
 class Post(db.Model):
     __tablename__ = "post"
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(String(140))
     timestamp = db.Column(DateTime, default=func.now())
-
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User', back_populates='posts')
 
     def __repr__(self):
         return f'Post {self.body}'
+
+
+class MyModelView(ModelView):
+    def is_accessible(self):
+        if current_user.isAdmin:
+            return current_user.is_authenticated
+        else:
+            return False
+
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect(url_for('login'))
+
+

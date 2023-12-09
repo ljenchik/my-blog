@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
     {% block content %}
+    {% if current_user.isAdmin %}
+        <p><a href="/admin">Admin view</a></p>
+        {% endif %}
     <h1>Hi, {{current_user.username }}!</h1>
     {% if posts %}
     {% for post in posts %}
