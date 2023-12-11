@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+a {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+input {
+    cursor: text;
+}
+
+.title {
+    margin-top: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title h1, .title h5 {
+    margin: 20px 0;
+}
+
+.row {
+    justify-content: center;
+}
+
+.form-control {
+    margin-bottom: 20px;
+}
+
+.btn
+{
+    float: right;
+    background: #0d6efd;
+    color: white;
+    box-shadow: 2px 2px 2px grey;
+}

@@ -13,6 +13,7 @@
             <img src="{{ post.user.get_avatar(20) }}"/>
             <a href="{{url_for('post', id=post.id)}}"><b>{{ post.body }}</b></a>
            💬 {{post.get_comments_length()}}
+            {{post.timestamp.strftime('%d/%m/%Y')}}</p>
         </p>
     </div>
     {% endfor %}
