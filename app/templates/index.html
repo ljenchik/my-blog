@@ -9,10 +9,9 @@
     {% for post in posts %}
     <div>
         <p>
-             <p>
             <img src="{{ post.user.get_avatar(20) }}"/>
             <a href="{{url_for('comment', id=post.id)}}"><b>{{ post.body }}</b></a>
-        </p>
+           💬 {{post.get_comments_length()}}
         </p>
     </div>
     {% endfor %}

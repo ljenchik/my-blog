@@ -141,13 +141,19 @@ def delete_post(id):
 @login_required
 def comment(id):
     post = Post.query.filter_by(id=id).first_or_404()
-    form=CommentForm()
+    print(post.get_comments_length())
+    post_author = User.query.filter_by(id=post.user_id).first_or_404()
+    form = CommentForm()
+
     if form.validate_on_submit():
-        new_comment = Comment(content=form.content.data, post_id=id)
+        new_comment = Comment(content=form.content.data, post_id=id, user_id=current_user.id)
         db.session.add(new_comment)
         db.session.commit()
         flash('Your comment has been added.')
+        # return redirect(url_for('comment', id=id))
+
     comments = Comment.query.filter_by(post_id=post.id).all()
-    return render_template('comment_form.html', title='Add comment', comments=comments, post=post, form=form)
+    return render_template('comment_form.html', title='Add comment',
+                           comments=comments, post=post, form=form, post_author=post_author)
 
 

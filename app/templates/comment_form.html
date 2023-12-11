@@ -5,7 +5,7 @@
     {{ form.hidden_tag() }}
     <h2>{{title}}</h2>
     <h4>{{post}}</h4>
-    <p>by {{post.user_id}} </p>
+    <p>by {{post_author.username}} </p>
     <p>
         {{ form.content.label }}<br>
         {{ form.content(cols=50, rows=4) }}<br>
@@ -15,12 +15,14 @@
          <p>{{ form.submit() }}</p>
     </p>
 
-    <h2>Comments</h2>
 
     {% if comments%}
-    {% for comment in comments %}
-    <p>{{comment}}</p>
-    {% endfor %}
+        <h2>Comments</h2>
+        {% for comment in comments %}
+            <p><b>{{comment}} by {{comment.get_username()}}</b> {{comment.timestamp}}</p>
+        {% endfor %}
+    {% else %}
+        <h2>No comments yet</h2>
     {% endif %}
 
 </form>

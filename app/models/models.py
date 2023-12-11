@@ -23,6 +23,7 @@ class User(UserMixin, db.Model):
     profile_image = db.Column(String(256))
     info = db.Column(String(256))
     posts = db.relationship('Post', back_populates='user', cascade='all, delete-orphan')
+    comments = db.relationship('Comment', back_populates='user', cascade='all, delete-orphan')
 
 
     def __repr__(self):
@@ -56,6 +57,10 @@ class Post(db.Model):
     def __repr__(self):
         return f'Post {self.body}'
 
+    def get_comments_length(self):
+        commments = Comment.query.filter_by(post_id=self.id).all()
+        return len(commments)
+
 
 class MyModelView(ModelView):
     def is_accessible(self):
@@ -74,8 +79,19 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(String(1000))
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     post = db.relationship('Post', back_populates='comments')
+    user = db.relationship('User', back_populates='comments')
     timestamp = db.Column(DateTime, default=func.now())
 
     def __repr__(self):
-        return f'Comment: {self.content}'
+        return f'{self.content}'
+
+    def get_username(self):
+        user = User.query.filter_by(id=self.id).first_or_404()
+        return user.username
+
+    # def get_user_avatar(self):
+    #     user = User.query.filter_by(id=self.id).first_or_404()
+    #     avatar = user.get_avatar(user, 20)
+    #     return avatar
