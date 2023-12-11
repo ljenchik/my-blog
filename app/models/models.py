@@ -27,7 +27,7 @@ class User(UserMixin, db.Model):
 
 
     def __repr__(self):
-        return f'User {self.username}, {self.email}'
+        return f'{self.username}, {self.email}'
 
     @login.user_loader
     def load_user(id):
@@ -55,7 +55,7 @@ class Post(db.Model):
     comments = db.relationship('Comment', back_populates='post', cascade='all, delete-orphan')
 
     def __repr__(self):
-        return f'Post {self.body}'
+        return f'{self.body}'
 
     def get_comments_length(self):
         commments = Comment.query.filter_by(post_id=self.id).all()
@@ -88,10 +88,10 @@ class Comment(db.Model):
         return f'{self.content}'
 
     def get_username(self):
-        user = User.query.filter_by(id=self.id).first_or_404()
+        user = User.query.filter_by(id=self.user_id).first_or_404()
         return user.username
 
-    # def get_user_avatar(self):
-    #     user = User.query.filter_by(id=self.id).first_or_404()
-    #     avatar = user.get_avatar(user, 20)
-    #     return avatar
+    def get_user_avatar(self):
+        user = User.query.filter_by(id=self.id).first_or_404()
+        avatar = user.get_avatar(user, 20)
+        return avatar

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+
     {% block content %}
     {% if current_user.isAdmin %}
         <p><a href="/admin">Admin view</a></p>
@@ -10,7 +11,7 @@
     <div>
         <p>
             <img src="{{ post.user.get_avatar(20) }}"/>
-            <a href="{{url_for('comment', id=post.id)}}"><b>{{ post.body }}</b></a>
+            <b>{{ post.body }}</b>
            💬 {{post.get_comments_length()}}
         </p>
     </div>

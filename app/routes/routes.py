@@ -75,7 +75,7 @@ def user(username):
         db.session.commit()
         flash('Your post has been saved.')
     user.profile_image = user.get_avatar(128)
-    posts = Post.query.filter_by(user_id=user.id)
+    posts = Post.query.filter_by(user_id=user.id).all()
     return render_template('profile.html', user=user, form=form, posts=posts)
 
 
@@ -137,23 +137,26 @@ def delete_post(id):
                            update_post_form=update_post_form, delete_post_form=delete_post_form, id=id)
 
 
-@app.route('/comment/<id>', methods=["GET", "POST"])
+@app.route('/post/<id>', methods=["GET", "POST"])
 @login_required
-def comment(id):
+def get_post(id):
     post = Post.query.filter_by(id=id).first_or_404()
-    print(post.get_comments_length())
     post_author = User.query.filter_by(id=post.user_id).first_or_404()
     form = CommentForm()
-
     if form.validate_on_submit():
-        new_comment = Comment(content=form.content.data, post_id=id, user_id=current_user.id)
-        db.session.add(new_comment)
-        db.session.commit()
-        flash('Your comment has been added.')
-        # return redirect(url_for('comment', id=id))
+            new_comment = Comment()
+            new_comment.content = form.content.data
+            new_comment.post_id = id
+            new_comment.user_id = current_user.id
+            db.session.add(new_comment)
+            db.session.commit()
+            flash('Your comment has been added.')
+            return redirect(url_for('index'))
 
-    comments = Comment.query.filter_by(post_id=post.id).all()
-    return render_template('comment_form.html', title='Add comment',
-                           comments=comments, post=post, form=form, post_author=post_author)
+    comments = Comment.query.filter_by(post_id=id).all()
+    return render_template('post.html',
+                           post=post,
+                           title='Add comment',
+                           form=form, post_author=post_author, comments=comments)
 
 
