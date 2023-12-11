@@ -139,7 +139,7 @@ def delete_post(id):
 
 @app.route('/post/<id>', methods=["GET", "POST"])
 @login_required
-def get_post(id):
+def post(id):
     post = Post.query.filter_by(id=id).first_or_404()
     post_author = User.query.filter_by(id=post.user_id).first_or_404()
     form = CommentForm()

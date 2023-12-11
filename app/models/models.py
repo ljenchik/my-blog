@@ -87,11 +87,4 @@ class Comment(db.Model):
     def __repr__(self):
         return f'{self.content}'
 
-    def get_username(self):
-        user = User.query.filter_by(id=self.user_id).first_or_404()
-        return user.username
 
-    def get_user_avatar(self):
-        user = User.query.filter_by(id=self.id).first_or_404()
-        avatar = user.get_avatar(user, 20)
-        return avatar

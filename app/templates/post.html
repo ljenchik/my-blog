@@ -16,7 +16,10 @@
     {% if comments %}
         <h2>Comments</h2>
         {% for comment in comments %}
-            <p><b>{{ comment }} by {{ comment.get_username() }} </b> {{comment.timestamp}}</p>
+            <p>
+                <img src="{{ comment.user.get_avatar(20) }}"/>
+                <b>{{ comment }} by {{ comment.user.username }} </b>
+                {{comment.timestamp.strftime('%d/%m/%Y')}}</p>
         {% endfor %}
     {% else %}
         <h2>No comments yet</h2>

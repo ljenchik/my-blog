@@ -11,7 +11,7 @@
     <div>
         <p>
             <img src="{{ post.user.get_avatar(20) }}"/>
-            <b>{{ post.body }}</b>
+            <a href="{{url_for('post', id=post.id)}}"><b>{{ post.body }}</b></a>
            💬 {{post.get_comments_length()}}
         </p>
     </div>
