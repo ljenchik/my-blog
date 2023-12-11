@@ -16,10 +16,11 @@ migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = 'login'
 
-from app.models.models import Post, User, MyModelView
+from app.models.models import Post, User, MyModelView, Comment
 admin = Admin(app, name='my-blog', template_mode='bootstrap3')
 admin.add_view(MyModelView(User, db.session))
 admin.add_view(MyModelView(Post, db.session))
+admin.add_view(MyModelView(Comment, db.session))
 
 from app.routes import routes
 from app.models import models

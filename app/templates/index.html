@@ -11,7 +11,7 @@
         <p>
              <p>
             <img src="{{ post.user.get_avatar(20) }}"/>
-            {{ post.user.username }} says: <b>{{ post.body }}</b>
+            <a href="{{url_for('comment', id=post.id)}}"><b>{{ post.body }}</b></a>
         </p>
         </p>
     </div>

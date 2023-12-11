@@ -8,7 +8,8 @@ from app.forms.update_profile_form import UpdateProfileForm
 from app.forms.post_form import PostForm
 from app.forms.update_post_form import UpdatePostForm
 from app.forms.delete_post_form import DeletePostForm
-from app.models.models import User, Post
+from app.forms.comment_form import CommentForm
+from app.models.models import User, Post, Comment
 
 
 @app.route('/')
@@ -81,7 +82,7 @@ def user(username):
 @app.route('/update_profile', methods=["GET", "POST"])
 @login_required
 def update_profile():
-    form = UpdateProfileForm()
+    form = UpdateProfileForm(current_user.username)
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.info = form.info.data
@@ -134,3 +135,19 @@ def delete_post(id):
         return redirect(url_for('user', username=user.username))
     return render_template('manage_post.html', title='Update or delete post',
                            update_post_form=update_post_form, delete_post_form=delete_post_form, id=id)
+
+
+@app.route('/comment/<id>', methods=["GET", "POST"])
+@login_required
+def comment(id):
+    post = Post.query.filter_by(id=id).first_or_404()
+    form=CommentForm()
+    if form.validate_on_submit():
+        new_comment = Comment(content=form.content.data, post_id=id)
+        db.session.add(new_comment)
+        db.session.commit()
+        flash('Your comment has been added.')
+    comments = Comment.query.filter_by(post_id=post.id).all()
+    return render_template('comment_form.html', title='Add comment', comments=comments, post=post, form=form)
+
+

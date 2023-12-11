@@ -12,6 +12,7 @@ from flask_login import UserMixin
 from flask_login import current_user
 
 
+
 class User(UserMixin, db.Model):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
@@ -21,7 +22,8 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(String(256))
     profile_image = db.Column(String(256))
     info = db.Column(String(256))
-    posts = db.relationship('Post', back_populates='user', cascade="all, delete")
+    posts = db.relationship('Post', back_populates='user', cascade='all, delete-orphan')
+
 
     def __repr__(self):
         return f'User {self.username}, {self.email}'
@@ -45,10 +47,11 @@ class User(UserMixin, db.Model):
 class Post(db.Model):
     __tablename__ = "post"
     id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(String(140))
+    body = db.Column(String(2500))
     timestamp = db.Column(DateTime, default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship('User', back_populates='posts')
+    comments = db.relationship('Comment', back_populates='post', cascade='all, delete-orphan')
 
     def __repr__(self):
         return f'Post {self.body}'
@@ -65,3 +68,14 @@ class MyModelView(ModelView):
         return redirect(url_for('login'))
 
 
+
+class Comment(db.Model):
+    __tablename__ = "comment"
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(String(1000))
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    post = db.relationship('Post', back_populates='comments')
+    timestamp = db.Column(DateTime, default=func.now())
+
+    def __repr__(self):
+        return f'Comment: {self.content}'
