@@ -159,7 +159,7 @@ def post(id):
             db.session.add(new_comment)
             db.session.commit()
             flash('Your comment has been added.')
-            return redirect(url_for('index'))
+            return redirect(url_for('post', id=id))
 
     comments = Comment.query.filter_by(post_id=id).order_by(Comment.timestamp.desc()).all()
     return render_template('post.html',

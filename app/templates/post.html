@@ -13,17 +13,6 @@ content %}
         </div>
     </div>
 </div>
-<!-- <form action="" method="post" novalidate>
-    {{ form.hidden_tag() }}
-    <div>
-        {{ form.content.label }}<br />
-        {{ form.content(cols=50, rows=4) }}<br />
-        {% for error in form.errors %}
-        <span style="color: red">[{{ error }}]</span>
-        {% endfor %}
-        <p>{{ form.submit() }}</p>
-    </div>
-</form> -->
 {% if comments %}
 <h2 class="greeting">Comments</h2>
 {% for comment in comments %}
