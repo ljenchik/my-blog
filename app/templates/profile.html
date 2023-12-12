@@ -1,38 +1,31 @@
-{% extends "base.html" %}
-
-{% block content %}
-    <div>
-
-        <img src="{{ user.profile_image }}" width="128" height="128"/>
-        <h1>{{ user.username }}</h1>
-        <p><a href="{{ url_for('update_profile') }}">Update profile</a></p>
-         {% if user.info %}
-        <h2>{{user.info}}</h2>
+{% extends "base.html" %} {% block content %}
+<div>
+    <img src="{{ user.profile_image }}" width="128" height="128" />
+    <h1>{{ user.username }}</h1>
+    <p><a href="{{ url_for('update_profile') }}">Update profile</a></p>
+    {% if user.info %}
+    <h2>{{user.info}}</h2>
     {% endif %}
-    </div>
-    <hr>
-    <div>
-         <form action="" method="post" novalidate>
-            {{ form.hidden_tag() }}
-             <p>
-                {{ form.post.label }}<br>
-                 {{ form.post(cols=50, rows=4) }}<br>
-                 {% for error in form.post.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
-            </p>
-            <p>{{ form.submit() }}</p>
-         </form>
-    </div>
-    <hr>
-
-    {% if posts %}
-        {% for post in posts%}
+</div>
+<hr />
+<div>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
         <p>
-            <img src="{{ user.profile_image }}" width="20" height="20"/>
-           <b>{{ post.body }}</b>
+            {{ form.post.label }}<br />
+            {{ form.post(cols=50, rows=4) }}<br />
+            {% for error in form.post.errors %}
+            <span style="color: red">[{{ error }}]</span>
+            {% endfor %}
         </p>
-        {% endfor%}
-    {% endif %}
+        <p>{{ form.submit() }}</p>
+    </form>
+</div>
+<hr />
 
-{% endblock %}
+{% if posts %} {% for post in posts%}
+<p>
+    <img src="{{ user.profile_image }}" width="20" height="20" />
+    <b>{{ post.body }}</b>
+</p>
+{% endfor%} {% endif %} {% endblock %}

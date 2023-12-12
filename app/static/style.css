@@ -89,3 +89,62 @@ ul {
     outline: none;
     background-color: rgba(223, 71, 231, 0.35);
 }
+
+/* Home page */
+.greeting {
+    text-align: center;
+    color: rgb(125, 4, 131);
+    margin: 20px 0;
+}
+
+.posts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.post {
+    margin: 10px;
+    border: 1px solid rgba(128, 128, 128, 0.364);
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 2px 2px 2px grey;
+    width: 60vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comments-date {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.9rem;
+    align-items: center;
+    color: grey;
+}
+
+.avatar-comment {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.comments-date p {
+    margin: 0;
+}
+
+.post:hover {
+    transform: scale(1.01);
+}
+
+a .post {
+    color: rgb(125, 4, 131);
+    font-size: 1.5rem;
+}
+
+.post-link:hover {
+    text-decoration: none;
+    color: rgba(223, 71, 231, 0.35);
+    cursor: pointer;
+}
