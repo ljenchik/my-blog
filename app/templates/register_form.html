@@ -1,15 +1,16 @@
-{% extends "base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
-
-{% block content %}
+{% extends "base.html" %} {% import "bootstrap/wtf.html" as wtf %} {% block
+content %}
+<div class="register-title">
     <h1>{{ title }}</h1>
-<p>Already a User? <a href="{{ url_for('login') }}">Click to Login!</a></p>
-<div class="row">
-        <div class="col-md-3">
-            {{ wtf.quick_form(form) }}
-        </div>
-
+    <h5>
+        Already a User? <a href="{{ url_for('login') }}">Click to Login!</a>
+    </h5>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">{{ wtf.quick_form(form) }}</div>
     </div>
+</div>
 
 <!--    <form action="" method="post" novalidate>-->
 <!--        {{ form.hidden_tag() }}-->
@@ -44,5 +45,3 @@
 <!--        <p>{{ form.submit() }}</p>-->
 <!--    </form>-->
 {% endblock %}
-
-

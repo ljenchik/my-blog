@@ -10,24 +10,39 @@ html {
 a {
     cursor: pointer;
     text-decoration: none;
+    color: rgb(223, 71, 231);
 }
 
-button {
+a:hover {
+    color: rgba(223, 71, 231, 0.35);
+}
+
+button,
+.btn {
     cursor: pointer;
+}
+
+button:hover,
+.btn:hover {
+    background: rgba(223, 71, 231, 0.35);
 }
 
 input {
     cursor: text;
 }
 
-.title {
-    margin-top: 20%;
+.login-title,
+.register-title {
+    margin-top: 15%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.title h1, .title h5 {
+.login-title h1,
+.login-title h5,
+.register-title h1,
+.register-title h5 {
     margin: 20px 0;
 }
 
@@ -39,10 +54,9 @@ input {
     margin-bottom: 20px;
 }
 
-.btn
-{
+.btn {
     float: right;
-    background: #0d6efd;
+    background: rgb(223, 71, 231);
     color: white;
     box-shadow: 2px 2px 2px grey;
 }
