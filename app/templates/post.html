@@ -5,7 +5,20 @@ content %}
     post
 </h1>
 <p class="comments-date">Posted on {{post.timestamp.strftime('%d/%m/%Y')}}</p>
-<div class="post-text">{{post}}</div>
+<div class="post-text">{{post}}
+{% if post_author == current_user%}
+<a
+        class="btn btn-default edit-button"
+        href="{{ url_for('update_post', id=post.id) }}"
+        >Edit</a
+    >
+{% endif%}
+
+</div>
+</br>
+<hr>
+</br>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-6 col-md-8 col-sm-10 col-xs-10">
@@ -13,6 +26,11 @@ content %}
         </div>
     </div>
 </div>
+
+</br>
+<hr>
+</br>
+
 {% if comments %}
 <h2 class="greeting">Comments</h2>
 {% for comment in comments %}

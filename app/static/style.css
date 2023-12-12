@@ -178,7 +178,7 @@ a .post {
 }
 
 textarea#post.form-control {
-    height: 20vh;
+    height: 50vh;
     font-size: 1.2rem;
 }
 
@@ -231,4 +231,18 @@ input#submit.btn {
 
 .extra {
     margin-top: 70px;
+}
+
+
+.edit-button {
+    margin-top: 30px;
+}
+
+
+.back-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
 }

@@ -48,19 +48,16 @@
                             >Profile</a
                         >
                     </li>
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            href="{{url_for('user', username=current_user.username)}}"
+                            >Add post</a
+                        >
+                    </li>
                 </ul>
             </div>
         </nav>
-
-        <!-- <div>
-            My blog:
-            <a href="{{url_for('index')}}">Home</a>
-            <a href="{{url_for('login')}}">Login</a>
-            <a href="{{url_for('logout')}}">Logout</a>
-            <a href="{{url_for('user', username=current_user.username)}}"
-                >Profile</a
-            >
-        </div> -->
 
         {% with messages = get_flashed_messages() %} {% if messages %}
         <div class="alert alert-success" role="alert">
