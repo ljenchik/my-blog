@@ -1,14 +1,29 @@
-{% extends "base.html" %} {% block content %}
-<div>
-    <img src="{{ user.profile_image }}" width="128" height="128" />
-    <h1>{{ user.username }}</h1>
-    <p><a href="{{ url_for('update_profile') }}">Update profile</a></p>
-    {% if user.info %}
-    <h2>{{user.info}}</h2>
-    {% endif %}
+{% extends "base.html" %} {% import "bootstrap/wtf.html" as wtf %}{% block
+content %}
+<div class="avatar-username">
+    <div class="avatar-username">
+        <img src="{{ user.profile_image }}" width="128" height="128" />
+        <div>
+            <h1>{{ user.username }}</h1>
+            {% if user.info %}
+            <h2>{{user.info}}</h2>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="update-profile-link">
+        <a href="{{ url_for('update_profile') }}">Update profile</a>
+    </div>
 </div>
 <hr />
-<div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6 col-md-8 col-sm-10 col-xs-10">
+            {{ wtf.quick_form(form) }}
+        </div>
+    </div>
+</div>
+<!-- <div>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
@@ -20,12 +35,31 @@
         </p>
         <p>{{ form.submit() }}</p>
     </form>
-</div>
+</div> -->
 <hr />
 
-{% if posts %} {% for post in posts%}
-<p>
-    <img src="{{ user.profile_image }}" width="20" height="20" />
-    <b>{{ post.body }}</b>
-</p>
+{% if posts %}
+<h2 class="greeting">{{user.username}}'s posts</h2>
+{% for post in posts%}
+<div class="posts">
+    <ul>
+        <a href="{{url_for('update_post', id=post.id)}}" class="post-link">
+            <li class="post">
+                <div class="avatar-comment">
+                    <img
+                        src="{{ user.profile_image }}"
+                        width="20"
+                        height="20"
+                    />
+                    {% if post.body|length > 100 %} {{ post.body[0:100] }} ...
+                    {%else %} {{ post.body }} {% endif %}
+                </div>
+                <div class="comments-date">
+                    <p>💬 {{post.get_comments_length()}}</p>
+                    <p>Posted on {{post.timestamp.strftime('%d/%m/%Y')}}</p>
+                </div>
+            </li></a
+        >
+    </ul>
+</div>
 {% endfor%} {% endif %} {% endblock %}

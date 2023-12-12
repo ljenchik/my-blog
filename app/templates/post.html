@@ -1,27 +1,44 @@
-{% extends "base.html" %}
-
-{% block content %}
-    <h4>{{post}} by {{post_author.username}}</h4>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <div>
-            {{ form.content.label }}<br>
-            {{ form.content(cols=50, rows=4) }}<br>
-            {% for error in form.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-             <p>{{ form.submit() }}</p>
+{% extends "base.html" %}{% import "bootstrap/wtf.html" as wtf %} {% block
+content %}
+<h1 class="greeting">
+    <img src="{{ post_author.get_avatar(40) }}" /> {{post_author.username}}'s
+    post
+</h1>
+<p class="comments-date">Posted on {{post.timestamp.strftime('%d/%m/%Y')}}</p>
+<div class="post-text">{{post}}</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6 col-md-8 col-sm-10 col-xs-10">
+            {{ wtf.quick_form(form) }}
         </div>
-    </form>
-    {% if comments %}
-        <h2>Comments</h2>
-        {% for comment in comments %}
-            <p>
-                <img src="{{ comment.user.get_avatar(20) }}"/>
-                <b>{{ comment }} by {{ comment.user.username }} </b>
-                {{comment.timestamp.strftime('%d/%m/%Y')}}</p>
+    </div>
+</div>
+<!-- <form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.content.label }}<br />
+        {{ form.content(cols=50, rows=4) }}<br />
+        {% for error in form.errors %}
+        <span style="color: red">[{{ error }}]</span>
         {% endfor %}
-    {% else %}
-        <h2>No comments yet</h2>
-    {% endif %}
-{% endblock %}
+        <p>{{ form.submit() }}</p>
+    </div>
+</form> -->
+{% if comments %}
+<h2 class="greeting">Comments</h2>
+{% for comment in comments %}
+<div class="posts">
+    <ul>
+        <li class="post">
+            <div class="avatar-comment">
+                <img src="{{ comment.user.get_avatar(20) }}" />
+                {{ comment }}
+            </div>
+            <p class="comments-date">
+                Posted {{comment.timestamp.strftime('%d/%m/%Y')}} by {{
+                comment.user.username }}
+            </p>
+        </li>
+    </ul>
+</div>
+{% endfor %} {% endif %} {% endblock %}

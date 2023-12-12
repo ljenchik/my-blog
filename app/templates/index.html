@@ -9,7 +9,8 @@
             <li class="post">
                 <div class="avatar-comment">
                     <img src="{{ post.user.get_avatar(20) }}" />
-                    <b>{{ post.body[0:100] }}</b>
+                    {% if post.body|length > 100 %} {{ post.body[0:100] }} ...
+                    {%else %} {{ post.body }} {% endif %}
                 </div>
                 <div class="comments-date">
                     <p>💬 {{post.get_comments_length()}}</p>

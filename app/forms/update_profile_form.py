@@ -7,9 +7,9 @@ from app.models.models import User
 
 class UpdateProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
-    info = TextAreaField('Info', validators=[Length(min=0, max=250)])
-    profile_image = FileField('Profile image', validators=[FileAllowed(['jpg', 'png'])])
-    submit = SubmitField('Save')
+    info = TextAreaField('About me', validators=[Length(min=0, max=2500)])
+    # profile_image = FileField('Profile image', validators=[FileAllowed(['jpg', 'png'])])
+    submit = SubmitField('Update')
 
 
     def __init__(self, original_username, *args, **kwargs):

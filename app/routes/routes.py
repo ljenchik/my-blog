@@ -74,6 +74,7 @@ def user(username):
         db.session.add(new_post)
         db.session.commit()
         flash('Your post has been saved.')
+        return redirect(url_for('user', username=username))
     user.profile_image = user.get_avatar(128)
     posts = Post.query.filter_by(user_id=user.id).all()
     return render_template('profile.html', user=user, form=form, posts=posts)
@@ -86,15 +87,15 @@ def update_profile():
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.info = form.info.data
-        current_user.profile_image = form.profile_image.data
+        # current_user.profile_image = form.profile_image.data
         db.session.commit()
         flash('Your changes have been saved.')
         return redirect(url_for('user', username=current_user.username))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.info.data = current_user.info
-        form.profile_image.data = current_user.profile_image
-    return render_template('update_profile_form.html', title='Update Profile',
+        # form.profile_image.data = current_user.profile_image
+    return render_template('update_profile_form.html',
                            form=form)
 
 

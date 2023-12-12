@@ -31,7 +31,7 @@ input {
     cursor: text;
 }
 
-/* Login and register forms */
+/* Login and register pages */
 
 .login-title,
 .register-title {
@@ -64,6 +64,7 @@ input {
 }
 
 /* Navbar and alert messages*/
+
 ul {
     list-style-type: none;
     margin-left: 1rem;
@@ -91,6 +92,7 @@ ul {
 }
 
 /* Home page */
+
 .greeting {
     text-align: center;
     color: rgb(125, 4, 131);
@@ -107,13 +109,14 @@ ul {
     margin: 10px;
     border: 1px solid rgba(128, 128, 128, 0.364);
     border-radius: 15px;
-    padding: 10px;
+    padding: 20px 10px;
     box-shadow: 2px 2px 2px grey;
-    width: 60vw;
+    width: 70vw;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    gap: 20px;
 }
 
 .comments-date {
@@ -122,16 +125,20 @@ ul {
     font-size: 0.9rem;
     align-items: center;
     color: grey;
+    margin: 0;
 }
 
 .avatar-comment {
     display: flex;
     gap: 10px;
     align-items: center;
+    color: rgb(125, 4, 131);
 }
 
 .comments-date p {
-    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
 
 .post:hover {
@@ -140,11 +147,45 @@ ul {
 
 a .post {
     color: rgb(125, 4, 131);
-    font-size: 1.5rem;
+    font-size: 1.3rem;
 }
 
 .post-link:hover {
     text-decoration: none;
     color: rgba(223, 71, 231, 0.35);
     cursor: pointer;
+}
+
+/* Profile page */
+
+.avatar-username {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    color: rgb(125, 4, 131);
+}
+
+textarea#post.form-control {
+    height: 20vh;
+}
+
+.update-profile-link a {
+    color: rgb(125, 4, 131);
+}
+
+.update-profile-link a:hover {
+    text-decoration: none;
+    color: rgba(223, 71, 231, 0.35);
+    cursor: pointer;
+}
+
+/* Post page */
+
+.post-text {
+    text-align: justify;
+    margin: 30px auto;
+    width: 80%;
 }
