@@ -31,6 +31,8 @@ input {
     cursor: text;
 }
 
+/* Login and register forms */
+
 .login-title,
 .register-title {
     margin-top: 15%;
@@ -59,4 +61,31 @@ input {
     background: rgb(223, 71, 231);
     color: white;
     box-shadow: 2px 2px 2px grey;
+}
+
+/* Navbar and alert messages*/
+ul {
+    list-style-type: none;
+    margin-left: 1rem;
+    font-size: larger;
+}
+
+.alert {
+    margin: 20px 0;
+    height: 60px;
+}
+
+.navbar {
+    background: rgba(223, 71, 231, 0.35);
+}
+
+.navbar-light .navbar-toggler {
+    border-color: rgba(0, 0, 0, 0);
+    outline: none;
+}
+
+.navbar-light .navbar-toggler:hover {
+    transform: scale(1.1);
+    outline: none;
+    background-color: rgba(223, 71, 231, 0.35);
 }
