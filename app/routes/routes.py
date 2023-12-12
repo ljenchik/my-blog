@@ -144,12 +144,12 @@ def delete_post(id):
 @login_required
 def post(id):
     post = Post.query.filter_by(id=id).first_or_404()
-    if not post.views:
+    post_author = User.query.filter_by(id=post.user_id).first_or_404()
+    if not post.views and post_author != current_user:
         post.views = 1
-    else:
+    elif post.views and post_author != current_user:
         post.views += 1
     db.session.commit()
-    post_author = User.query.filter_by(id=post.user_id).first_or_404()
     form = CommentForm()
     if form.validate_on_submit():
             new_comment = Comment()
