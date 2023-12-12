@@ -53,6 +53,7 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship('User', back_populates='posts')
     comments = db.relationship('Comment', back_populates='post', cascade='all, delete-orphan')
+    views = db.Column(db.Integer, server_default=str(0))
 
     def __repr__(self):
         return f'{self.body}'

@@ -1,8 +1,23 @@
 {% extends "base.html" %} {% block content %} {% if current_user.isAdmin %}
-<p><a href="/admin">Admin view</a></p>
-{% endif %}
+<div class="admin-view-link"><a href="/admin">Admin view</a></div>
+<div class="extra">
+    <h1 class="greeting">Hi, {{current_user.username }}!</h1>
+</div>
+{% else %}
 <h1 class="greeting">Hi, {{current_user.username }}!</h1>
-{% if posts %} {% for post in posts %}
+{% endif %}
+
+<div class="sort-buttons">
+    <a
+        class="btn btn-default"
+        href="{{ url_for('sort', sort_by='popularity') }}"
+        >Sort by popularity</a
+    >
+    <a class="btn btn-default" href="{{ url_for('sort', sort_by='date') }}"
+        >Sort by date</a
+    >
+</div>
+{% if posts %} `{% for post in posts %}
 <div class="posts">
     <ul>
         <a href="{{url_for('post', id=post.id)}}" class="post-link">
@@ -13,7 +28,14 @@
                     {%else %} {{ post.body }} {% endif %}
                 </div>
                 <div class="comments-date">
-                    <p>💬 {{post.get_comments_length()}}</p>
+                    <div class="comments-views">
+                        {% if not post.views%}
+                        <p>👁️‍🗨️ 0</p>
+                        {% else %}
+                        <p>👁️‍🗨️ {{post.views}}</p>
+                        {% endif %}
+                        <p>💬 {{post.get_comments_length()}}</p>
+                    </div>
                     <p>Posted on {{post.timestamp.strftime('%d/%m/%Y')}}</p>
                     <p>by {{post.user.username}}</p>
                 </div>

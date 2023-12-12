@@ -144,6 +144,11 @@ def delete_post(id):
 @login_required
 def post(id):
     post = Post.query.filter_by(id=id).first_or_404()
+    if not post.views:
+        post.views = 1
+    else:
+        post.views += 1
+    db.session.commit()
     post_author = User.query.filter_by(id=post.user_id).first_or_404()
     form = CommentForm()
     if form.validate_on_submit():
@@ -156,10 +161,26 @@ def post(id):
             flash('Your comment has been added.')
             return redirect(url_for('index'))
 
-    comments = Comment.query.filter_by(post_id=id).all()
+    comments = Comment.query.filter_by(post_id=id).order_by(Comment.timestamp.desc()).all()
     return render_template('post.html',
                            post=post,
                            title='Add comment',
                            form=form, post_author=post_author, comments=comments)
+
+
+@app.route('/sort/<sort_by>', methods=["GET", "POST"])
+@login_required
+def sort(sort_by):
+    if sort_by == 'date':
+        posts = Post.query.order_by(Post.timestamp.desc()).all()
+        print(posts)
+        return render_template("index.html", title='Home Page', posts=posts)
+    elif sort_by == 'popularity':
+        posts = Post.query.order_by(Post.views.desc()).all()
+        return render_template("index.html", title='Home Page', posts=posts)
+
+    
+
+    
 
 

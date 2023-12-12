@@ -55,7 +55,14 @@ content %}
                     {%else %} {{ post.body }} {% endif %}
                 </div>
                 <div class="comments-date">
-                    <p>💬 {{post.get_comments_length()}}</p>
+                    <div class="comments-views">
+                        {% if not post.views%}
+                        <p>👁️‍🗨️ 0</p>
+                        {% else %}
+                        <p>👁️‍🗨️ {{post.views}}</p>
+                        {% endif %}
+                        <p>💬 {{post.get_comments_length()}}</p>
+                    </div>
                     <p>Posted on {{post.timestamp.strftime('%d/%m/%Y')}}</p>
                 </div>
             </li></a
