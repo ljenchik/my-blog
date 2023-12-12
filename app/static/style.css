@@ -246,3 +246,8 @@ input#submit.btn {
     align-items: center;
     margin: 20px 0;
 }
+
+.back {
+text-align: center;
+font-size: x-large;
+}

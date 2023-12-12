@@ -65,19 +65,19 @@ def register():
 @app.route('/user/<username>', methods=["GET", "POST"])
 @login_required
 def user(username):
-    user = User.query.filter_by(username=username).first_or_404()
-    form = PostForm()
-    if form.validate_on_submit():
-        new_post = Post()
-        new_post.body=form.post.data
-        new_post.user_id=user.id
-        db.session.add(new_post)
-        db.session.commit()
-        flash('Your post has been saved.')
-        return redirect(url_for('user', username=username))
-    user.profile_image = user.get_avatar(128)
-    posts = Post.query.filter_by(user_id=user.id).all()
-    return render_template('profile.html', user=user, form=form, posts=posts)
+        user = User.query.filter_by(username=username).first_or_404()
+        form = PostForm()
+        if form.validate_on_submit():
+            new_post = Post()
+            new_post.body=form.post.data
+            new_post.user_id=user.id
+            db.session.add(new_post)
+            db.session.commit()
+            flash('Your post has been saved.')
+            return redirect(url_for('user', username=username))
+        user.profile_image = user.get_avatar(128)
+        posts = Post.query.filter_by(user_id=user.id).all()
+        return render_template('profile.html', user=user, form=form, posts=posts)
 
 
 @app.route('/update_profile', methods=["GET", "POST"])
