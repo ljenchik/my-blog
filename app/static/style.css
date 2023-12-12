@@ -139,6 +139,7 @@ ul {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    margin: 0px;
 }
 
 .post:hover {
@@ -170,6 +171,7 @@ a .post {
 
 textarea#post.form-control {
     height: 20vh;
+    font-size: 1.2rem;
 }
 
 .update-profile-link a {
@@ -188,4 +190,14 @@ textarea#post.form-control {
     text-align: justify;
     margin: 30px auto;
     width: 80%;
+}
+
+input#submit.btn {
+    margin: 10px;
+}
+
+#delete-post-button input {
+    background-color: rgb(223, 71, 231);
+    border: none;
+    color: white;
 }

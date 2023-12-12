@@ -66,7 +66,7 @@
         <div class="alert alert-success" role="alert">
             <ul>
                 {% for message in messages %}
-                <li>{{ message }}</li>
+                <li>{{ message[0:-1] }}</li>
                 {% endfor %}
             </ul>
         </div>

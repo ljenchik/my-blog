@@ -116,7 +116,7 @@ def update_post(id):
         return redirect(url_for('user', username=user.username))
     elif request.method == 'GET':
         update_post_form.post.data = post.body
-    return render_template('manage_post.html', title='Update or delete post',
+    return render_template('manage_post.html',
                            update_post_form=update_post_form, delete_post_form=delete_post_form, id=id)
 
 
@@ -134,7 +134,9 @@ def delete_post(id):
         db.session.commit()
         flash('Your post has been deleted.')
         return redirect(url_for('user', username=user.username))
-    return render_template('manage_post.html', title='Update or delete post',
+    elif request.method == 'GET':
+        update_post_form.post.data = post.body
+    return render_template('manage_post.html', 
                            update_post_form=update_post_form, delete_post_form=delete_post_form, id=id)
 
 
