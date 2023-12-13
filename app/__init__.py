@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
 from config import Config
 from flask_bootstrap import Bootstrap
+from flask_pagedown import PageDown
 
 app = Flask(__name__)
 
@@ -12,6 +13,7 @@ app.config.from_object(Config)
 
 db = SQLAlchemy(app)
 boostrap = Bootstrap(app)
+pagedown = PageDown(app)
 migrate = Migrate(app, db, render_as_batch=True)
 
 login = LoginManager(app)

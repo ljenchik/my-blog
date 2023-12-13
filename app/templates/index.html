@@ -7,6 +7,9 @@
 <h1 class="greeting">Hi, {{current_user.username }}!</h1>
 {% endif %}
 
+
+{% if posts %}
+
 <div class="sort-buttons">
     <a
         class="btn btn-default"
@@ -17,15 +20,20 @@
         >Sort by date</a
     >
 </div>
-{% if posts %} `{% for post in posts %}
+{% for post in posts %}
 <div class="posts">
     <ul>
         <a href="{{url_for('post', id=post.id)}}" class="post-link">
             <li class="post">
                 <div class="avatar-comment">
-                    <img src="{{ post.user.get_avatar(20) }}" />
-                    {% if post.body|length > 100 %} {{ post.body[0:100] }} ...
-                    {%else %} {{ post.body }} {% endif %}
+                    <div>
+                        {% if post.title_html %}
+                            {{post.title_html | safe}}
+                        {% else %}
+                            <h1>{{post.title}}</h1>
+                        {% endif %}
+                        {{(post.body_html | safe)[0:250]}}...read more
+                    </div>
                 </div>
                 <div class="comments-date">
                     <div class="comments-views">
@@ -37,12 +45,14 @@
                         <p>💬 {{post.get_comments_length()}}</p>
                     </div>
                     <p>Posted on {{post.timestamp.strftime('%d/%m/%Y')}}</p>
-                    <p>by {{post.user.username}}</p>
+                    <span>by {{post.user.username}}
+                    <img src="{{ post.user.get_avatar(20) }}" /> </span>
                 </div>
             </li></a
         >
     </ul>
 </div>
 {% endfor %} {% else %}
-<h4>Be the first to create a post</h4>
+<h4 class="greeting">No posts yet</h4>
+<h4 class="greeting">Be the first to create a post</h4>
 {% endif %} {% endblock %}

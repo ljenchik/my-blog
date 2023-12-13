@@ -109,14 +109,12 @@ ul {
     margin: 10px;
     border: 1px solid rgba(128, 128, 128, 0.364);
     border-radius: 15px;
-    padding: 20px 10px;
+    padding: 20px;
     box-shadow: 2px 2px 2px grey;
-    width: 70vw;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
+    width: 80vw;
+    display: inline-grid;
+    grid-template-columns: 5fr 1fr;
+    grid-template-rows: 1fr;
 }
 
 .comments-date {
@@ -138,9 +136,13 @@ ul {
 
 .avatar-comment {
     display: flex;
-    gap: 10px;
+    gap: 20px;
     align-items: center;
     color: rgb(125, 4, 131);
+}
+
+.avatar-comment p {
+margin: 0;
 }
 
 .comments-date p {
@@ -215,6 +217,7 @@ input#submit.btn {
     justify-content: center;
     align-items: center;
     gap: 10px;
+    margin: 20px;
 }
 
 .admin-view-link a {
@@ -251,3 +254,11 @@ input#submit.btn {
 text-align: center;
 font-size: x-large;
 }
+
+
+hr {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0,0,0,.1);
+    }

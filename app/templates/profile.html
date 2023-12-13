@@ -16,10 +16,12 @@ content %}
     </div>
 </div>
 <hr />
+<h3 class="greeting">Create a new post</h3>
 <div class="container-fluid">
+
     <div class="row">
-        <div class="col-lg-6 col-md-8 col-sm-10 col-xs-10">
-            {{ wtf.quick_form(form) }}
+        <div class="col-lg-8 col-md-8 col-sm-10 col-xs-10">
+            {{ wtf.quick_form(form)}}
         </div>
     </div>
 </div>
@@ -34,13 +36,14 @@ content %}
         <a href="{{url_for('post', id=post.id)}}" class="post-link">
             <li class="post">
                 <div class="avatar-comment">
-                    <img
-                        src="{{ user.profile_image }}"
-                        width="20"
-                        height="20"
-                    />
-                    {% if post.body|length > 100 %} {{ post.body[0:100] }} ...
-                    {%else %} {{ post.body }} {% endif %}
+                    <div>
+                        {% if post.title_html %}
+                            {{post.title_html | safe}}
+                        {% else %}
+                            <h1>{{post.title}}</h1>
+                        {% endif %}
+                        {{(post.body_html | safe)[0:250]}}...read more
+                    </div>
                 </div>
                 <div class="comments-date">
                     <div class="comments-views">

@@ -69,10 +69,12 @@ def user(username):
         form = PostForm()
         if form.validate_on_submit():
             new_post = Post()
+            new_post.title=form.title.data
             new_post.body=form.post.data
             new_post.user_id=user.id
             db.session.add(new_post)
             db.session.commit()
+
             flash('Your post has been saved.')
             return redirect(url_for('user', username=username))
         user.profile_image = user.get_avatar(128)
@@ -109,13 +111,15 @@ def update_post(id):
     delete_post_form = DeletePostForm()
 
     if update_post_form.validate_on_submit():
-        updated_post = Post(body=update_post_form.post.data, user_id=user.id)
+        updated_post = Post(body=update_post_form.post.data, user_id=user.id, title=update_post_form.title.data)
+        post.title = updated_post.title
         post.body = updated_post.body
         db.session.commit()
         flash('Your post has been changed.')
         return redirect(url_for('user', username=user.username))
     elif request.method == 'GET':
         update_post_form.post.data = post.body
+        update_post_form.title.data = post.title
     return render_template('manage_post.html',
                            update_post_form=update_post_form, delete_post_form=delete_post_form, id=id)
 
@@ -136,6 +140,7 @@ def delete_post(id):
         return redirect(url_for('user', username=user.username))
     elif request.method == 'GET':
         update_post_form.post.data = post.body
+        update_post_form.title.data = post.title
     return render_template('manage_post.html', 
                            update_post_form=update_post_form, delete_post_form=delete_post_form, id=id)
 

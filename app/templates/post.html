@@ -5,7 +5,13 @@ content %}
     post
 </h1>
 <p class="comments-date">Posted on {{post.timestamp.strftime('%d/%m/%Y')}}</p>
-<div class="post-text">{{post}}
+<div class="post-text">
+
+    {% if post.body_html%}
+        {{post.body_html | safe}}
+    {% else %}
+        {{post.body}}
+    {% endif%}
 {% if post_author == current_user%}
 <a
         class="btn btn-default edit-button"

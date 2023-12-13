@@ -11,6 +11,9 @@ from flask_admin.contrib.sqla import ModelView
 from flask_login import UserMixin
 from flask_login import current_user
 
+import bleach
+from markdown import markdown
+
 
 
 class User(UserMixin, db.Model):
@@ -45,10 +48,14 @@ class User(UserMixin, db.Model):
         return self.profile_image
 
 
+
 class Post(db.Model):
     __tablename__ = "post"
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(String(250))
+    title_html = db.Column(db.String(250))
     body = db.Column(String(2500))
+    body_html = db.Column(db.String(2500))
     timestamp = db.Column(DateTime, default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship('User', back_populates='posts')
@@ -56,12 +63,34 @@ class Post(db.Model):
     views = db.Column(db.Integer, server_default=str(0))
 
     def __repr__(self):
+        if self.body_html:
+            return f'{self.body_html}'
         return f'{self.body}'
 
     def get_comments_length(self):
         commments = Comment.query.filter_by(post_id=self.id).all()
         return len(commments)
 
+    @staticmethod
+    def on_changed_body(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
+        'h1', 'h2', 'h3', 'p']
+        target.body_html = bleach.linkify(bleach.clean(
+        markdown(value, output_format='html'),
+        tags=allowed_tags, strip=True))
+
+    @staticmethod
+    def on_changed_title(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
+        'h1', 'h2', 'h3', 'p']
+        target.title_html = bleach.linkify(bleach.clean(
+        markdown(value, output_format='html'),
+        tags=allowed_tags, strip=True))
+
+db.event.listen(Post.body, 'set', Post.on_changed_body)
+db.event.listen(Post.title, 'set', Post.on_changed_title)
 
 class MyModelView(ModelView):
     def is_accessible(self):
@@ -79,6 +108,7 @@ class Comment(db.Model):
     __tablename__ = "comment"
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(String(1000))
+
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     post = db.relationship('Post', back_populates='comments')
