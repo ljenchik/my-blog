@@ -19,17 +19,15 @@ from app.models.models import User, Post, Comment
 def index():
     posts = Post.query.all()
     form = DropdownForm()
-    print(form.sorting_options.data)
-    if form.validate_on_submit():
-        if form.sorting_options.data == "Newest first":
-            posts = Post.query.order_by(Post.timestamp.desc()).all()
-            return render_template("index.html", title='Home Page', posts=posts, form=form)
-        elif form.sorting_options.data == "Oldest first":
-            posts = Post.query.order_by(Post.timestamp.asc()).all()
-            return render_template("index.html", title='Home Page', posts=posts, form=form)
-        elif form.sorting_options.data == "Most popular":
-            posts = Post.query.order_by(Post.views.desc()).all()
-        return render_template("index.html", posts=posts, form=form)
+    # if option == "Newest first":
+    #     posts = Post.query.order_by(Post.timestamp.desc()).all()
+    #     return render_template("index.html", title='Home Page', posts=posts, form=form)
+    # elif form.sorting_options.data == "Oldest first":
+    #     posts = Post.query.order_by(Post.timestamp.asc()).all()
+    #     return render_template("index.html", title='Home Page', posts=posts, form=form)
+    # elif form.sorting_options.data == "Most popular":
+    #     posts = Post.query.order_by(Post.views.desc()).all()
+    #     return render_template("index.html", posts=posts, form=form)
     return render_template("index.html", posts=posts, form=form)
 
 
@@ -92,7 +90,7 @@ def user(username):
             flash('Your post has been saved.')
             return redirect(url_for('user', username=username))
         user.profile_image = user.get_avatar(128)
-        posts = Post.query.filter_by(user_id=user.id).all()
+        posts = Post.query.filter_by(user_id=user.id).order_by(Post.timestamp.desc()).all()
         return render_template('profile.html', user=user, form=form, posts=posts)
 
 
@@ -193,13 +191,15 @@ def sort(sort_by):
     form=DropdownForm()
     if sort_by == 'newest':
         posts = Post.query.order_by(Post.timestamp.desc()).all()
-        return render_template("index.html", title='Home Page', posts=posts, form=form)
+        return render_template("index.html", posts=posts, form=form, option='Newest first')
     elif sort_by == 'oldest':
         posts = Post.query.order_by(Post.timestamp.asc()).all()
-        return render_template("index.html", title='Home Page', posts=posts, form=form)
+        return render_template("index.html",  posts=posts, form=form)
     elif sort_by == 'popular':
         posts = Post.query.order_by(Post.views.desc()).all()
         return render_template("index.html", posts=posts, form=form)
+    posts = Post.query.order_by(Post.timestamp.desc()).all()
+    return render_template("index.html", posts=posts, form=form)
 
     
 
