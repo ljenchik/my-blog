@@ -112,18 +112,24 @@ ul {
     padding: 20px;
     box-shadow: 2px 2px 2px grey;
     width: 80vw;
-    display: inline-grid;
+    display: grid;
     grid-template-columns: 5fr 1fr;
     grid-template-rows: 1fr;
 }
 
-.comments-date {
+.comments-date,
+.comments-date a {
     display: flex;
     flex-direction: column;
     font-size: 0.9rem;
-    align-items: center;
+    align-items: flex-end;
+    justify-content: flex-start;
     color: grey;
-    margin: 0;
+    padding: 5px;
+}
+
+.comment-date img {
+    margin: 10px;
 }
 
 .comments-views {
@@ -142,7 +148,7 @@ ul {
 }
 
 .avatar-comment p {
-margin: 0;
+    margin: 0;
 }
 
 .comments-date p {
@@ -150,6 +156,10 @@ margin: 0;
     flex-direction: column;
     align-items: flex-end;
     margin: 0px;
+}
+
+.date {
+    text-align: center;
 }
 
 .post:hover {
@@ -212,6 +222,10 @@ input#submit.btn {
     color: white;
 }
 
+.greeting img {
+    margin: 0 10px;
+}
+
 .sort-buttons {
     display: flex;
     justify-content: center;
@@ -236,11 +250,9 @@ input#submit.btn {
     margin-top: 70px;
 }
 
-
 .edit-button {
     margin-top: 30px;
 }
-
 
 .back-button {
     display: flex;
@@ -251,14 +263,13 @@ input#submit.btn {
 }
 
 .back {
-text-align: center;
-font-size: x-large;
+    text-align: center;
+    font-size: x-large;
 }
-
 
 hr {
     margin-top: 3rem;
     margin-bottom: 1rem;
     border: 0;
-    border-top: 1px solid rgba(0,0,0,.1);
-    }
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}

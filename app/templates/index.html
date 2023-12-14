@@ -1,25 +1,29 @@
-{% extends "base.html" %} {% block content %} {% if current_user.isAdmin %}
+{% extends "base.html" %}{% import "bootstrap/wtf.html" as wtf %} {% block
+content %} {% if current_user.isAdmin %}
 <div class="admin-view-link"><a href="/admin">Admin view</a></div>
 <div class="extra">
     <h1 class="greeting">Hi, {{current_user.username }}!</h1>
 </div>
 {% else %}
 <h1 class="greeting">Hi, {{current_user.username }}!</h1>
-{% endif %}
+{% endif %} {% if posts %}
+<!--<div class="sort-buttons">-->
+<!--    <a-->
+<!--        class="btn btn-default"-->
+<!--        href="{{ url_for('sort', sort_by='popular') }}"-->
+<!--        >Sort by popularity</a-->
+<!--    >-->
+<!--    <a class="btn btn-default" href="{{ url_for('sort', sort_by='newest') }}"-->
+<!--        >Sort by date</a-->
+<!--    >-->
+<!--</div>-->
 
-
-{% if posts %}
-
-<div class="sort-buttons">
-    <a
-        class="btn btn-default"
-        href="{{ url_for('sort', sort_by='popularity') }}"
-        >Sort by popularity</a
-    >
-    <a class="btn btn-default" href="{{ url_for('sort', sort_by='date') }}"
-        >Sort by date</a
-    >
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-3">{{ wtf.quick_form(form) }}</div>
+    </div>
 </div>
+
 {% for post in posts %}
 <div class="posts">
     <ul>
@@ -27,12 +31,10 @@
             <li class="post">
                 <div class="avatar-comment">
                     <div>
-                        {% if post.title_html %}
-                            {{post.title_html | safe}}
-                        {% else %}
-                            <h1>{{post.title}}</h1>
-                        {% endif %}
-                        {{(post.body_html | safe)[0:250]}}...read more
+                        {% if post.title_html %} {{post.title_html | safe}} {%
+                        else %}
+                        <h1>{{post.title}}</h1>
+                        {% endif %} {{(post.body_html | safe)[0:250]}} ...>>
                     </div>
                 </div>
                 <div class="comments-date">
@@ -44,12 +46,15 @@
                         {% endif %}
                         <p>💬 {{post.get_comments_length()}}</p>
                     </div>
-                    <p>Posted on {{post.timestamp.strftime('%d/%m/%Y')}}</p>
-                    <span>by {{post.user.username}}
-                    <img src="{{ post.user.get_avatar(20) }}" /> </span>
-                </div>
-            </li></a
-        >
+                    <p>Posted on</p>
+                    <p>{{post.timestamp.strftime('%d/%m/%Y')}}</p>
+                    by {{post.user.username}}
+
+                    <a href="{{url_for('user', username=post.user.username)}}">
+                        <img src="{{ post.user.get_avatar(64) }}"
+                    /></a>
+                </div></li
+        ></a>
     </ul>
 </div>
 {% endfor %} {% else %}

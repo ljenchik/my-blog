@@ -1,10 +1,13 @@
 {% extends "base.html" %}{% import "bootstrap/wtf.html" as wtf %} {% block
 content %}
+
 <h1 class="greeting">
-    <img src="{{ post_author.get_avatar(40) }}" /> {{post_author.username}}'s
+    <a href="{{url_for('user', username=post.user.username)}}">
+        <img src="{{ post.user.get_avatar(40) }}"
+    /></a>{{post_author.username}}'s
     post
 </h1>
-<p class="comments-date">Posted on {{post.timestamp.strftime('%d/%m/%Y')}}</p>
+<p class="date">Posted on {{post.timestamp.strftime('%d/%m/%Y')}}</p>
 <div class="post-text">
 
     {% if post.body_html%}

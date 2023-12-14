@@ -9,15 +9,30 @@ from app.forms.post_form import PostForm
 from app.forms.update_post_form import UpdatePostForm
 from app.forms.delete_post_form import DeletePostForm
 from app.forms.comment_form import CommentForm
+from app.forms.dropdown_form import DropdownForm
 from app.models.models import User, Post, Comment
 
 
-@app.route('/')
-@app.route('/home')
+@app.route('/', methods=["GET", "POST"])
+@app.route('/home', methods=["GET", "POST"])
 @login_required
 def index():
     posts = Post.query.all()
-    return render_template("index.html", title='Home Page', posts=posts)
+    form = DropdownForm()
+    print(form.sorting_options.data)
+    if form.validate_on_submit():
+        if form.sorting_options.data == "Newest first":
+            posts = Post.query.order_by(Post.timestamp.desc()).all()
+            return render_template("index.html", title='Home Page', posts=posts, form=form)
+        elif form.sorting_options.data == "Oldest first":
+            posts = Post.query.order_by(Post.timestamp.asc()).all()
+            return render_template("index.html", title='Home Page', posts=posts, form=form)
+        elif form.sorting_options.data == "Most popular":
+            posts = Post.query.order_by(Post.views.desc()).all()
+        return render_template("index.html", posts=posts, form=form)
+    return render_template("index.html", posts=posts, form=form)
+
+
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -74,7 +89,6 @@ def user(username):
             new_post.user_id=user.id
             db.session.add(new_post)
             db.session.commit()
-
             flash('Your post has been saved.')
             return redirect(url_for('user', username=username))
         user.profile_image = user.get_avatar(128)
@@ -176,13 +190,16 @@ def post(id):
 @app.route('/sort/<sort_by>', methods=["GET", "POST"])
 @login_required
 def sort(sort_by):
-    if sort_by == 'date':
+    form=DropdownForm()
+    if sort_by == 'newest':
         posts = Post.query.order_by(Post.timestamp.desc()).all()
-        print(posts)
-        return render_template("index.html", title='Home Page', posts=posts)
-    elif sort_by == 'popularity':
+        return render_template("index.html", title='Home Page', posts=posts, form=form)
+    elif sort_by == 'oldest':
+        posts = Post.query.order_by(Post.timestamp.asc()).all()
+        return render_template("index.html", title='Home Page', posts=posts, form=form)
+    elif sort_by == 'popular':
         posts = Post.query.order_by(Post.views.desc()).all()
-        return render_template("index.html", title='Home Page', posts=posts)
+        return render_template("index.html", posts=posts, form=form)
 
     
 

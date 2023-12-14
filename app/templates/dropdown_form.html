@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% import "bootstrap/wtf.html" as wtf %} {% block
+content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6 col-md-8 col-sm-10 col-xs-10">
+            {{ wtf.quick_form(form) }}
+        </div>
+    </div>
+</div>
+{% endfor %} {% endif %} {% endblock %}
