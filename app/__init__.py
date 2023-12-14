@@ -28,3 +28,5 @@ admin.add_view(MyModelView(Comment, db.session))
 from app.routes import routes
 from app.models import models
 from app.errors import errors
+
+

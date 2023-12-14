@@ -17,17 +17,10 @@ from app.models.models import User, Post, Comment
 @app.route('/home', methods=["GET", "POST"])
 @login_required
 def index():
-    posts = Post.query.all()
+    page = request.args.get('page', 1, type=int)
+    per_page = 2
+    posts = Post.query.filter().paginate(page=page, per_page=per_page, error_out=False)
     form = DropdownForm()
-    # if option == "Newest first":
-    #     posts = Post.query.order_by(Post.timestamp.desc()).all()
-    #     return render_template("index.html", title='Home Page', posts=posts, form=form)
-    # elif form.sorting_options.data == "Oldest first":
-    #     posts = Post.query.order_by(Post.timestamp.asc()).all()
-    #     return render_template("index.html", title='Home Page', posts=posts, form=form)
-    # elif form.sorting_options.data == "Most popular":
-    #     posts = Post.query.order_by(Post.views.desc()).all()
-    #     return render_template("index.html", posts=posts, form=form)
     return render_template("index.html", posts=posts, form=form)
 
 
@@ -189,14 +182,16 @@ def post(id):
 @login_required
 def sort(sort_by):
     form=DropdownForm()
+    page = request.args.get('page', 1, type=int)
+    per_page = 2
     if sort_by == 'newest':
-        posts = Post.query.order_by(Post.timestamp.desc()).all()
+        posts = Post.query.order_by(Post.timestamp.desc()).paginate(page=page, per_page=per_page, error_out=False)
         return render_template("index.html", posts=posts, form=form, option='Newest first')
     elif sort_by == 'oldest':
-        posts = Post.query.order_by(Post.timestamp.asc()).all()
+        posts = Post.query.order_by(Post.timestamp.asc()).paginate(page=page, per_page=per_page, error_out=False)
         return render_template("index.html",  posts=posts, form=form)
     elif sort_by == 'popular':
-        posts = Post.query.order_by(Post.views.desc()).all()
+        posts = Post.query.order_by(Post.views.desc()).paginate(page=page, per_page=per_page, error_out=False)
         return render_template("index.html", posts=posts, form=form)
     posts = Post.query.order_by(Post.timestamp.desc()).all()
     return render_template("index.html", posts=posts, form=form)

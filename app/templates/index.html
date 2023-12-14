@@ -7,22 +7,6 @@ content %} {% if current_user.isAdmin %}
 {% else %}
 <h1 class="greeting">Hi, {{current_user.username }}!</h1>
 {% endif %} {% if posts %}
-<!--<div class="sort-buttons">-->
-<!--    <a-->
-<!--        class="btn btn-default"-->
-<!--        href="{{ url_for('sort', sort_by='popular') }}"-->
-<!--        >Sort by popularity</a-->
-<!--    >-->
-<!--    <a class="btn btn-default" href="{{ url_for('sort', sort_by='newest') }}"-->
-<!--        >Sort by date</a-->
-<!--    >-->
-<!--</div>-->
-
-<!-- <div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-3">{{ wtf.quick_form(form) }}</div>
-    </div>
-</div> -->
 <div class="dropdown">
     <button
         class="btn btn-secondary dropdown-toggle"
@@ -79,7 +63,16 @@ content %} {% if current_user.isAdmin %}
         ></a>
     </ul>
 </div>
-{% endfor %} {% else %}
+{% endfor %}
+<div class="arrows">
+    {% if posts.has_prev %}
+    <a href="{{ url_for('index', page=posts.prev_num) }}"> << Previous </a>
+    {% endif %} {% if posts.has_next %}
+    <a href="{{ url_for('index', page=posts.next_num) }}"> Next >> </a>
+    {% endif %}
+</div>
+
+{% else %}
 <h4 class="greeting">No posts yet</h4>
 <h4 class="greeting">Be the first to create a post</h4>
 {% endif %} {% endblock %}
