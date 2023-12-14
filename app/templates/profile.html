@@ -12,7 +12,7 @@ content %}
     </div>
     {% if current_user == user%}
     <div class="update-profile-link">
-        <a href="{{ url_for('update_profile') }}">Update profile</a>
+        <a href="{{ url_for('main.update_profile') }}">Update profile</a>
     </div>
     {% endif %}
 </div>
@@ -33,7 +33,7 @@ content %}
 {% for post in posts%}
 <div class="posts">
     <ul>
-        <a href="{{url_for('post', id=post.id)}}" class="post-link">
+        <a href="{{url_for('main.post', id=post.id)}}" class="post-link">
             <li class="post">
                 <div class="avatar-comment">
                     <div>

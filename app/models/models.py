@@ -1,5 +1,4 @@
-from app import db, login
-
+# from app import login
 from hashlib import md5
 
 from sqlalchemy import String, DateTime
@@ -14,7 +13,7 @@ from flask_login import current_user
 import bleach
 from markdown import markdown
 
-
+from app.models import db
 
 class User(UserMixin, db.Model):
     __tablename__ = "user"
@@ -31,10 +30,6 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return f'{self.username}, {self.email}'
-
-    @login.user_loader
-    def load_user(id):
-        return db.session.get(User, int(id))
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -100,7 +95,7 @@ class MyModelView(ModelView):
             return False
 
     def inaccessible_callback(self, name, **kwargs):
-        return redirect(url_for('login'))
+        return redirect(url_for('main.login'))
 
 
 

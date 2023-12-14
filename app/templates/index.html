@@ -19,13 +19,13 @@ content %} {% if current_user.isAdmin %}
         Sort by
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="{{url_for('sort', sort_by='newest')}}"
+        <a class="dropdown-item" href="{{url_for('main.sort', sort_by='newest')}}"
             >Newest first</a
         >
-        <a class="dropdown-item" href="{{url_for('sort', sort_by='oldest')}}"
+        <a class="dropdown-item" href="{{url_for('main.sort', sort_by='oldest')}}"
             >Oldest first</a
         >
-        <a class="dropdown-item" href="{{url_for('sort', sort_by='popular')}}"
+        <a class="dropdown-item" href="{{url_for('main.sort', sort_by='popular')}}"
             >Most popular</a
         >
     </div>
@@ -33,7 +33,7 @@ content %} {% if current_user.isAdmin %}
 {% for post in posts %}
 <div class="posts">
     <ul>
-        <a href="{{url_for('post', id=post.id)}}" class="post-link">
+        <a href="{{url_for('main.post', id=post.id)}}" class="post-link">
             <li class="post">
                 <div class="avatar-comment">
                     <div>
@@ -56,7 +56,7 @@ content %} {% if current_user.isAdmin %}
                     <p>{{post.timestamp.strftime('%d/%m/%Y')}}</p>
                     by {{post.user.username}}
 
-                    <a href="{{url_for('user', username=post.user.username)}}">
+                    <a href="{{url_for('main.user', username=post.user.username)}}">
                         <img src="{{ post.user.get_avatar(64) }}"
                     /></a>
                 </div></li
@@ -66,10 +66,10 @@ content %} {% if current_user.isAdmin %}
 {% endfor %}
 <div class="arrows">
     {% if posts.has_prev %}
-    <a href="{{ url_for('index', page=posts.prev_num) }}"><i class="fa-solid fa-angles-left"></i>Previous</a>
+    <a href="{{ url_for('main.index', page=posts.prev_num) }}"><i class="fa-solid fa-angles-left"></i>Previous</a>
     {% endif %}
     {% if posts.has_next %}
-    <a href="{{ url_for('index', page=posts.next_num) }}">Next<i class="fa-solid fa-angles-right"></i>️</a>
+    <a href="{{ url_for('main.index', page=posts.next_num) }}">Next<i class="fa-solid fa-angles-right"></i>️</a>
     {% endif %}
 </div>
 

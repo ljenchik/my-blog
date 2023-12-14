@@ -2,7 +2,7 @@
 content %}
 
 <h1 class="greeting">
-    <a href="{{url_for('user', username=post.user.username)}}">
+    <a href="{{url_for('main.user', username=post.user.username)}}">
         <img src="{{ post.user.get_avatar(40) }}"
     /></a>{{post_author.username}}'s
     post
@@ -18,7 +18,7 @@ content %}
 {% if post_author == current_user%}
 <a
         class="btn btn-default edit-button"
-        href="{{ url_for('update_post', id=post.id) }}"
+        href="{{ url_for('main.update_post', id=post.id) }}"
         >Edit</a
     >
 {% endif%}

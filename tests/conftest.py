@@ -1,7 +1,6 @@
 import pytest
-from app import app, db
-from flask_sqlalchemy import SQLAlchemy
-from config import Config
+import app
+
 
 @pytest.fixture
 def app():

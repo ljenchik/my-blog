@@ -4,7 +4,7 @@ content %}
 <h1 class="greeting">Update or delete your post</h1>
 <a
         class="btn btn-default back-button"
-        href="{{ url_for('post', id=id) }}"
+        href="{{ url_for('main.post', id=id) }}"
         >Back to post</a>
 </div>
 
@@ -19,7 +19,7 @@ content %}
     <div class="row">
         <div class="col-md-8 col-sm-10 col-xs-10">
             <form
-                    action="{{url_for('delete_post', id=id)}}"
+                    action="{{url_for('main.delete_post', id=id)}}"
                     method="post"
                     novalidate
             >
