@@ -64,6 +64,7 @@ content %} {% if current_user.isAdmin %}
     </ul>
 </div>
 {% endfor %}
+{% if not sort_by %}
 <div class="arrows">
     {% if posts.has_prev %}
     <a href="{{ url_for('main.index', page=posts.prev_num) }}"><i class="fa-solid fa-angles-left"></i>Previous</a>
@@ -72,7 +73,16 @@ content %} {% if current_user.isAdmin %}
     <a href="{{ url_for('main.index', page=posts.next_num) }}">Next<i class="fa-solid fa-angles-right"></i>️</a>
     {% endif %}
 </div>
-
+{% else %}
+<div class="arrows">
+    {% if posts.has_prev %}
+    <a href="{{ url_for('main.sort', sort_by=sort_by, page=posts.prev_num) }}"><i class="fa-solid fa-angles-left"></i>Previous</a>
+    {% endif %}
+    {% if posts.has_next %}
+    <a href="{{ url_for('main.sort',sort_by=sort_by, page=posts.next_num) }}">Next<i class="fa-solid fa-angles-right"></i>️</a>
+    {% endif %}
+</div>
+{%endif%}
 {% else %}
 <h4 class="greeting">No posts yet</h4>
 <h4 class="greeting">Be the first to create a post</h4>

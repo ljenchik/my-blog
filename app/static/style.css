@@ -39,6 +39,7 @@ input {
     display: flex;
     flex-direction: column;
     align-items: center;
+     color: rgb(125, 4, 131);
 }
 
 .login-title h1,
@@ -69,6 +70,10 @@ ul {
     list-style-type: none;
     margin-left: 1rem;
     font-size: larger;
+}
+
+.nav-link, .navbar-brand {
+    color: rgb(125, 4, 131) !important;
 }
 
 .alert {

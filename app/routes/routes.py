@@ -12,6 +12,7 @@ from app.forms.dropdown_form import DropdownForm
 from app.models import db
 from app.models.models import User, Post, Comment
 from flask import Blueprint
+
 blueprint = Blueprint('main', __name__)
 
 
@@ -41,7 +42,7 @@ def login():
         if not next_page or urlsplit(next_page).netloc != '':
             next_page = url_for('main.index')
         return redirect(next_page)
-    return render_template('login_form.html', title='Log in', form=form)
+    return render_template('login_form.html', form=form)
 
 
 @blueprint.route('/logout')
@@ -186,13 +187,13 @@ def sort(sort_by):
     per_page = 2
     if sort_by == 'newest':
         posts = Post.query.order_by(Post.timestamp.desc()).paginate(page=page, per_page=per_page, error_out=False)
-        return render_template("index.html", posts=posts, form=form, option='Newest first')
+        return render_template("index.html", posts=posts, form=form, sort_by=sort_by)
     elif sort_by == 'oldest':
         posts = Post.query.order_by(Post.timestamp.asc()).paginate(page=page, per_page=per_page, error_out=False)
-        return render_template("index.html",  posts=posts, form=form)
+        return render_template("index.html",  posts=posts, form=form, sort_by=sort_by)
     elif sort_by == 'popular':
         posts = Post.query.order_by(Post.views.desc()).paginate(page=page, per_page=per_page, error_out=False)
-        return render_template("index.html", posts=posts, form=form)
+        return render_template("index.html", posts=posts, form=form, sort_by=sort_by)
     posts = Post.query.order_by(Post.timestamp.desc()).all()
     return render_template("index.html", posts=posts, form=form)
 

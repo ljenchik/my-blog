@@ -1,9 +1,6 @@
-# from app import login
 from hashlib import md5
-
 from sqlalchemy import String, DateTime
 from sqlalchemy.sql import func
-
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import redirect, url_for
 from flask_admin.contrib.sqla import ModelView
@@ -103,7 +100,6 @@ class Comment(db.Model):
     __tablename__ = "comment"
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(String(1000))
-
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     post = db.relationship('Post', back_populates='comments')
