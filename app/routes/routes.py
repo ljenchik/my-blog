@@ -38,10 +38,10 @@ def login():
             flash('Invalid username or password')
             return redirect(url_for('main.login'))
         login_user(user)
-        next_page = request.args.get('next')
-        if not next_page or urlsplit(next_page).netloc != '':
-            next_page = url_for('main.index')
-        return redirect(next_page)
+        # next_page = request.args.get('next')
+        # if not next_page or urlsplit(next_page).netloc != '':
+        #     next_page = url_for('main.index')
+        # return redirect(next_page)
     return render_template('login_form.html', form=form)
 
 
@@ -74,6 +74,8 @@ def register():
 def user(username):
         user = User.query.filter_by(username=username).first_or_404()
         form = PostForm()
+        page = request.args.get('page', 1, type=int)
+        per_page = 2
         if form.validate_on_submit():
             new_post = Post()
             new_post.title=form.title.data
@@ -84,7 +86,7 @@ def user(username):
             flash('Your post has been saved.')
             return redirect(url_for('main.user', username=username))
         user.profile_image = user.get_avatar(128)
-        posts = Post.query.filter_by(user_id=user.id).order_by(Post.timestamp.desc()).all()
+        posts = Post.query.filter_by(user_id=user.id).order_by(Post.timestamp.desc()).paginate(page=page, per_page=per_page, error_out=False)
         return render_template('profile.html', user=user, form=form, posts=posts)
 
 
