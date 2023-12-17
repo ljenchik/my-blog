@@ -28,7 +28,8 @@ content %}
 </div>
 
 <hr />
-{% endif %} {% if posts %}
+{% endif %}
+{% if posts %}
 <h2 class="greeting">{{user.username}}'s posts</h2>
 {% for post in posts%}
 <div class="posts">
@@ -40,8 +41,7 @@ content %}
                         {% if post.title_html %} {{post.title_html | safe}} {%
                         else %}
                         <h1>{{post.title}}</h1>
-                        {% endif %} {{(post.body_html | safe)[0:250]}}...read
-                        more
+                        {% endif %} {{(post.body_html | safe)[0:250]}}...>>
                     </div>
                 </div>
                 <div class="comments-date">

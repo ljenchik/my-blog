@@ -55,9 +55,9 @@ class Post(db.Model):
     views = db.Column(db.Integer, server_default=str(0))
 
     def __repr__(self):
-        if self.body_html:
-            return f'{self.body_html}'
-        return f'{self.body}'
+        if self.title_html:
+            return f'{self.title_html}'
+        return f'{self.title}'
 
     def get_comments_length(self):
         commments = Comment.query.filter_by(post_id=self.id).all()
