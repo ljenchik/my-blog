@@ -1,6 +1,5 @@
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import current_user, login_user, logout_user, login_required
-from urllib.parse import urlsplit
 from app.forms.login_form import LoginForm
 from app.forms.register_form import RegisterForm
 from app.forms.update_profile_form import UpdateProfileForm
@@ -32,16 +31,13 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
     form = LoginForm()
-    if form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first_or_404()
         if user is None or not user.check_password(form.password.data):
-            flash('Invalid username or password')
+            flash('Invalid email or password')
             return redirect(url_for('main.login'))
         login_user(user)
-        # next_page = request.args.get('next')
-        # if not next_page or urlsplit(next_page).netloc != '':
-        #     next_page = url_for('main.index')
-        # return redirect(next_page)
+        return redirect(url_for('main.index'))
     return render_template('login_form.html', form=form)
 
 
@@ -64,9 +60,9 @@ def register():
         new_user.set_password(form.password.data)
         db.session.add(new_user)
         db.session.commit()
-        flash('Congratulations, you are now a registered user!')
+        flash('Congratulations, you have registered!')
         return redirect(url_for('main.login'))
-    return render_template('register_form.html', title='Register', form=form)
+    return render_template('register_form.html', form=form)
 
 
 @blueprint.route('/user/<username>', methods=["GET", "POST"])
