@@ -326,7 +326,7 @@ class TestApp(TestCase):
          with self.app.app_context():
             client = self.app.test_client()
             self.login()
-            response = client.post('/user/olena', data={'title': 'Title 1', 'body': 'Post body 1', 'user_id': 1},
+            response = client.post('/user/olena', data={'title': 'Title 1', 'post': 'Post body 1', 'user_id': 1},
                                     follow_redirects=True)
             assert response.status_code == 200
             assert '/user/olena' in response.request.path
@@ -334,3 +334,4 @@ class TestApp(TestCase):
             assert "olena's posts" in html
             assert "Title 1" in html
             assert "Post body 1" in html
+            assert "Posted on" in html
