@@ -23,6 +23,7 @@ Flask-WTF==1.2.1
 fonttools==4.45.1
 form==0.0.1
 greenlet==3.0.1
+gunicorn==21.2.0
 idna==3.6
 inexactsearch==1.0.2
 iniconfig==2.0.0
