@@ -69,6 +69,7 @@ def register():
 @login_required
 def user(username):
         user = User.query.filter_by(username=username).first_or_404()
+        print(user.id)
         form = PostForm()
         page = request.args.get('page', 1, type=int)
         per_page = 2
@@ -82,8 +83,14 @@ def user(username):
             flash('Your post has been saved.')
             return redirect(url_for('main.user', username=username))
         user.profile_image = user.get_avatar(128)
-        posts = Post.query.filter_by(user_id=user.id).order_by(Post.timestamp.desc()).paginate(page=page, per_page=per_page, error_out=False)
-        return render_template('profile.html', user=user, form=form, posts=posts)
+        posts = Post.query.filter_by(user_id=user.id).order_by(Post.timestamp.desc())
+        posts_count = Post.query.filter_by(user_id=user.id).order_by(Post.timestamp.desc()).count()
+        print(posts_count)
+        if posts_count > 0:
+            paginated_posts = posts.paginate(page=page, per_page=per_page, error_out=False)
+            return render_template('profile.html', user=user, form=form, posts=paginated_posts)
+        else:
+            return render_template('profile.html', user=user, form=form)
 
 
 @blueprint.route('/update_profile', methods=["GET", "POST"])

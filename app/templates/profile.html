@@ -38,10 +38,16 @@ content %}
             <li class="post">
                 <div class="avatar-comment">
                     <div>
-                        {% if post.title_html %} {{post.title_html | safe}} {%
-                        else %}
-                        <h1>{{post.title}}</h1>
-                        {% endif %} {{(post.body_html | safe)[0:250]}}...>>
+                        {% if post.title_html %}
+                        {{post.title_html | safe}}
+                        {% else %}
+                        <p class="comment-title">{{ post.title}}</p>
+                        {% endif %}
+                        {% if post.body_html %}
+                        {{(post.body_html | safe)[0:250]}}...>>
+                        {% else %}
+                        {{post.body[0:250]}}...>>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="comments-date">
@@ -69,4 +75,5 @@ content %}
     <a href="{{ url_for('main.user',username=user.username, page=posts.next_num) }}">Next<i class="fa-solid fa-angles-right"></i>️</a>
     {% endif %}
 </div>
+
 {% endif %} {% endblock %}

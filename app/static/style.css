@@ -104,6 +104,11 @@ ul {
     margin: 20px 0;
 }
 
+div.greeting p {
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
 .posts {
     display: flex;
     flex-direction: column;
@@ -156,10 +161,14 @@ ul {
     margin: 0;
 }
 
+.avatar-comment div p:first-child {
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
 .comments-date p {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
     margin: 0px;
 }
 
@@ -318,9 +327,4 @@ hr {
 .arrows a:hover {
     color: rgb(223, 71, 231);
     text-decoration: none;
-}
-
-.list-container {
-    display:inline-flex;
-    justify-content: space-between;
 }
