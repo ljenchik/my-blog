@@ -1,13 +1,19 @@
 {% extends "base.html" %}{% import "bootstrap/wtf.html" as wtf %} {% block
 content %}
 
-<h1 class="greeting">
-    <a href="{{url_for('main.user', username=post.user.username)}}">
-        <img src="{{ post.user.get_avatar(40) }}"
-    /></a>{{post_author.username}}'s
-    post
-</h1>
-<p class="date">Posted on {{post.timestamp.strftime('%d/%m/%Y')}}</p>
+
+{% if post.title_html %}
+    <div class="greeting">{{ post.title_html | safe}}</div>
+{% else %}
+    <h1 class="greeting">{{ post.title}}</h1>
+{% endif %}
+<div class="date">
+     <a href="{{url_for('main.user', username=post.user.username)}}">
+        <img src="{{ post.user.get_avatar(20) }}"
+    />{{post_author.username}}'s
+    post</a>
+    <p>posted on {{post.timestamp.strftime('%d/%m/%Y')}}</p>
+</div>
 <div class="post-text">
 
     {% if post.body_html%}

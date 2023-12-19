@@ -33,14 +33,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{url_for('main.index')}}">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('main.login')}}"
-                            >Login</a
-                        >
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('main.logout')}}"
-                            >Logout</a
+                     <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            href="{{url_for('main.user', username=current_user.username)}}"
+                            >Add post</a
                         >
                     </li>
                     <li class="nav-item">
@@ -49,14 +46,17 @@
                             href="{{url_for('main.user', username=current_user.username)}}"
                             >Profile</a
                         >
-                    </li>
-                    <li class="nav-item">
-                        <a
-                            class="nav-link"
-                            href="{{url_for('main.user', username=current_user.username)}}"
-                            >Add post</a
+                    </li></ul>
+                    {% if current_user.is_authenticated%}
+                     <ul class="navbar-nav ms-auto">
+                         <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('main.logout')}}"
+                            >Logout</a
                         >
                     </li>
+                    </ul>
+
+                    {% endif %}
                 </ul>
             </div>
         </nav>

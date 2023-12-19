@@ -319,3 +319,8 @@ hr {
     color: rgb(223, 71, 231);
     text-decoration: none;
 }
+
+.list-container {
+    display:inline-flex;
+    justify-content: space-between;
+}
