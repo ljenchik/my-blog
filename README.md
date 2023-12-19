@@ -1,6 +1,6 @@
 # my-blog
 
-## My app is live at <a href="https://ljenchik-myblog.onrender.com">https://ljenchik-myblog.onrender.com</a>
+## My app is live at [onrender.com](https://ljenchik-myblog.onrender.com)
 
 
 ### Welcome to my blog web app!
@@ -20,18 +20,31 @@ This app:
 - For admin, there's a secret admin view link leading to the admin dashboard, where admins can efficiently manage users, posts, and comments
 
 
-### Install the requirements:
+### Setup
+
+Install Python requirements 
 
 ```
 pip install -r requirements.txt
 ```
+
+Run flask migrations to create empty SQLite database
+
 ```
+flask db migrate
 flask db upgrade
 ```
+
+Start Flask application
+
 ```
 flask run
 ```
+
 or
+
 ```
 gunicorn wsgi:application 
 ```
+
+Connect to [http://localhost:5000](http://localhost:5000) end enjoy!
