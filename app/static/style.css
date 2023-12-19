@@ -328,3 +328,7 @@ hr {
     color: rgb(223, 71, 231);
     text-decoration: none;
 }
+
+ul.navbar-nav.float-right.text-right.mr-auto {
+    float: none !important;
+}

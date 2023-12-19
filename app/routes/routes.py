@@ -21,7 +21,7 @@ blueprint = Blueprint('main', __name__)
 def index():
     page = request.args.get('page', 1, type=int)
     per_page = 2
-    posts = Post.query.filter().paginate(page=page, per_page=per_page, error_out=False)
+    posts = Post.query.order_by(Post.timestamp.desc()).paginate(page=page, per_page=per_page, error_out=False)
     form = DropdownForm()
     return render_template("index.html", posts=posts, form=form)
 
