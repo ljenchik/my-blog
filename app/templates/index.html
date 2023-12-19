@@ -1,13 +1,45 @@
 {% extends "base.html" %}{% import "bootstrap/wtf.html" as wtf %} {% block
 content %} {% if current_user.isAdmin %}
+
 <div class="admin-view-link"><a href="/admin">Admin view</a></div>
 <div class="extra">
     <h1 class="greeting">Hi, {{current_user.username }}!</h1>
 </div>
 {% else %}
 <h1 class="greeting">Hi, {{current_user.username }}!</h1>
-{% endif %} {% if posts %}
-<div class="dropdown">
+{% endif %}
+
+
+
+
+{% if posts %}
+<!--<div class="container">-->
+<!--    <div class="row mt-2">-->
+<!--        <div class="form-group">-->
+
+<!--            <label class="d-inline-block" for="sorting_options">Sort by:</label>-->
+
+<!--            <select name="sorting_options" class="form-control form-control-sm d-inline-block" style="width: auto;" id="sorting_options" >-->
+<!--               <option value="Newest first"><a class="dropdown-item" href="{{url_for('main.sort', sort_by='newest')}}"-->
+<!--            >Newest first</a-->
+<!--               ></option>-->
+
+<!--        <option value="Oldest first"><a class="dropdown-item" href="{{url_for('main.sort', sort_by='oldest')}}"-->
+<!--            >Oldest first</a-->
+<!--        ></option>-->
+<!--        <option value="Most popular"><a class="dropdown-item" href="{{url_for('main.sort', sort_by='popular')}}"-->
+<!--            >Most popular</a-->
+<!--        ></option>-->
+<!--            </select>-->
+
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+
+
+<div class="dropdown" id="sorting_options">
     <button
         class="btn btn-secondary dropdown-toggle"
         type="button"
@@ -92,4 +124,4 @@ content %} {% if current_user.isAdmin %}
 {% else %}
 <h4 class="greeting">No posts yet</h4>
 <h4 class="greeting">Be the first to create a post</h4>
-{% endif %} {% endblock %}
+{% endif %}{% endblock %}
